@@ -1,46 +1,84 @@
-<!DOCTYPE html>
-<!--
-    Copyright (c) 2012-2014 Adobe Systems Incorporated. All rights reserved.
-
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
--->
 <html>
     <head>
         <meta charset="utf-8" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="msapplication-tap-highlight" content="no" />
-        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
-        <link rel="stylesheet" type="text/css" href="css/index.css" />
-        <title>Hello World</title>
+        <title>DroidCounter</title>
+	<style>
+		.container {
+			width: 100%;
+			text-align: center;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			font-size: 50px;
+			font-family: Arial, Sans-serif;
+		}
+		.lifecontrols {
+			height: 40%;
+		}
+		.midcontrols {
+			background: gray;
+			height: 20%;
+		}
+		#toplife {
+			transform:rotate(-180deg);
+			background-color: #3333CC;
+		}
+		#bottomlife {
+			background-color: #B20000;
+		}
+		.vertical {
+			position: relative;
+		}
+		.value {
+			font-size: 2em;
+			color: white;
+		}
+		.button {
+			display: inline-block;
+			background: lightgray;
+			border-radius: 10px;
+			width: 1.2em;
+			margin-bottom: 0.2em;
+		}
+	</style>
+	<script type="text/javascript">
+		function changeLife(amount, elementId) {
+			var element = document.getElementById(elementId);
+			var value = parseInt(element.textContent);
+			element.textContent = value + amount;
+		}
+		function resetLife() {
+			var elements = document.getElementsByClassName('value');
+			for (var i = 0; i < elements.length; i++) {
+				var element = elements[i];
+				element.textContent = 20;
+			}
+		}
+	</script>
     </head>
     <body>
-        <div class="app">
-            <h1>PhoneGap</h1>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
-            </div>
-        </div>
+	<div class="container lifecontrols" id="toplife">
+		<span class="vertical">
+			<span class="button" onclick="changeLife(1, 'life1')">+</span>
+			<span class="value" id="life1">20</span>
+			<span class="button" onclick="changeLife(-1, 'life1')">-</span>
+		</span>
+	</div>
+	<div class="container midcontrols">
+		<span class="vertical">
+			<span class="button" onclick="resetLife()">R</span>
+		</span>
+	</div>
+	<div class="container lifecontrols" id="bottomlife">
+		<span class="vertical">
+			<span class="button" onclick="changeLife(1, 'life2')">+</span>
+			<span class="value" id="life2">20</span>
+			<span class="button" onclick="changeLife(-1, 'life2')">-</span>
+		</span>
+	</div>
         <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
-        <script type="text/javascript">
-            app.initialize();
-        </script>
     </body>
 </html>
