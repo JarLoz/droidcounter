@@ -5,80 +5,96 @@
         <meta name="msapplication-tap-highlight" content="no" />
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
         <title>DroidCounter</title>
-	<style>
-		.container {
-			width: 100%;
-			text-align: center;
-			display: flex;
-			flex-direction: column;
-			justify-content: center;
-			font-size: 50px;
-			font-family: Arial, Sans-serif;
-		}
-		.lifecontrols {
-			height: 40%;
-		}
-		.midcontrols {
-			background: gray;
-			height: 20%;
-		}
-		#toplife {
-			transform:rotate(-180deg);
-			background-color: #3333CC;
-		}
-		#bottomlife {
-			background-color: #B20000;
-		}
-		.vertical {
-			position: relative;
-		}
-		.value {
-			font-size: 2em;
-			color: white;
-		}
-		.button {
-			display: inline-block;
-			background: lightgray;
-			border-radius: 10px;
-			width: 1.2em;
-			margin-bottom: 0.2em;
-		}
-	</style>
-	<script type="text/javascript">
-		function changeLife(amount, elementId) {
-			var element = document.getElementById(elementId);
-			var value = parseInt(element.textContent);
-			element.textContent = value + amount;
-		}
-		function resetLife() {
-			var elements = document.getElementsByClassName('value');
-			for (var i = 0; i < elements.length; i++) {
-				var element = elements[i];
-				element.textContent = 20;
-			}
-		}
-	</script>
-    </head>
-    <body>
-	<div class="container lifecontrols" id="toplife">
-		<span class="vertical">
-			<span class="button" onclick="changeLife(-1, 'life1')">-</span>
-			<span class="value" id="life1">20</span>
-			<span class="button" onclick="changeLife(1, 'life1')">+</span>
-		</span>
-	</div>
-	<div class="container midcontrols">
-		<span class="vertical">
-			<span class="button" onclick="resetLife()">R</span>
-		</span>
-	</div>
-	<div class="container lifecontrols" id="bottomlife">
-		<span class="vertical">
-			<span class="button" onclick="changeLife(-1, 'life2')">-</span>
-			<span class="value" id="life2">20</span>
-			<span class="button" onclick="changeLife(1, 'life2')">+</span>
-		</span>
-	</div>
         <script type="text/javascript" src="cordova.js"></script>
+		<style>
+			.container {
+				width: 100%;
+				text-align: center;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				font-size: 50px;
+				font-family: Arial, Sans-serif;
+			}
+			.lifecontrols {
+				height: 40%;
+			}
+			.midcontrols {
+				background: gray;
+				height: 20%;
+			}
+			#toplife {
+				-webkit-transform:rotate(-180deg);
+				-moz-transform:rotate(-180deg);
+				-o-transform:rotate(-180deg);
+				transform:rotate(-180deg);
+				background-color: #3333CC;
+			}
+			#bottomlife {
+				background-color: #B20000;
+			}
+			.vertical {
+				position: relative;
+			}
+			.value {
+				font-size: 2em;
+				color: white;
+			}
+			.button {
+				display: inline-block;
+				background: lightgray;
+				border-radius: 10px;
+				width: 1.2em;
+				margin-bottom: 0.2em;
+			}
+			.selected {
+				background: #ffffff;
+			}
+		</style>
+		<script type="text/javascript">
+			var value = 20;
+			function changeLife(amount, elementId) {
+				var element = document.getElementById(elementId);
+				var value = parseInt(element.textContent);
+				element.textContent = value + amount;
+			}
+			function resetLife() {
+				var elements = document.getElementsByClassName('value');
+				for (var i = 0; i < elements.length; i++) {
+					var element = elements[i];
+					element.textContent = value;
+				}
+			}
+			function setValue(newValue) {
+				value = newValue;
+				resetLife();
+				document.getElementsByClassName("selected")[0].className = "button";
+				document.getElementById("set"+newValue).className = "button selected";
+			}
+		</script>
+	</head>
+	<body>
+		<div class="container lifecontrols" id="toplife">
+			<span class="vertical">
+				<span class="button" onclick="changeLife(1, 'life1')">+</span>
+				<span class="value" id="life1">20</span>
+				<span class="button" onclick="changeLife(-1, 'life1')">-</span>
+			</span>
+		</div>
+		<div class="container midcontrols">
+			<span class="vertical">
+				<span class="button selected" id="set20" onclick="setValue(20)">20</span>
+				<span class="button" id="set30" onclick="setValue(30)">30</span>
+				<span class="button" id="set40" onclick="setValue(40)">40</span>
+				<span class="button" id="set50" onclick="setValue(50)">50</span>
+			</span>
+		</div>
+		<div class="container lifecontrols" id="bottomlife">
+			<span class="vertical">
+				<span class="button" onclick="changeLife(1, 'life2')">+</span>
+				<span class="value" id="life2">20</span>
+				<span class="button" onclick="changeLife(-1, 'life2')">-</span>
+			</span>
+		</div>
     </body>
 </html>
