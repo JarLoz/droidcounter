@@ -5,3 +5,5 @@ Instructions:
 
 1. Install Phonegap, Cordova, Android SDK, whatever man
 2. cordova build
+
+![Screenshot](/screenshot.png "Screenshot")
