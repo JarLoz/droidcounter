@@ -20,7 +20,7 @@
 				height: 40%;
 			}
 			.midcontrols {
-				background: gray;
+				background-color: gray;
 				height: 20%;
 			}
 			#toplife {
@@ -39,62 +39,68 @@
 			.value {
 				font-size: 2em;
 				color: white;
+				min-width: 112px;
+				display: inline-block;
 			}
 			.button {
 				display: inline-block;
 				background: lightgray;
 				border-radius: 10px;
 				width: 1.2em;
-				margin-bottom: 0.2em;
 			}
 			.selected {
 				background: #ffffff;
 			}
 		</style>
-		<script type="text/javascript">
-			var value = 20;
-			function changeLife(amount, elementId) {
-				var element = document.getElementById(elementId);
-				var value = parseInt(element.textContent);
-				element.textContent = value + amount;
-			}
-			function resetLife() {
-				var elements = document.getElementsByClassName('value');
-				for (var i = 0; i < elements.length; i++) {
-					var element = elements[i];
-					element.textContent = value;
-				}
-			}
-			function setValue(newValue) {
-				value = newValue;
-				resetLife();
-				document.getElementsByClassName("selected")[0].className = "button";
-				document.getElementById("set"+newValue).className = "button selected";
-			}
-		</script>
 	</head>
 	<body>
 		<div class="container lifecontrols" id="toplife">
 			<span class="vertical">
-				<span class="button" onclick="changeLife(-1, 'life1')">-</span>
-				<span class="value" id="life1">20</span>
-				<span class="button" onclick="changeLife(1, 'life1')">+</span>
+				<span class="change button">-</span>
+				<span class="value">20</span>
+				<span class="change button">+</span>
 			</span>
 		</div>
 		<div class="container midcontrols">
 			<span class="vertical">
-				<span class="button selected" id="set20" onclick="setValue(20)">20</span>
-				<span class="button" id="set30" onclick="setValue(30)">30</span>
-				<span class="button" id="set40" onclick="setValue(40)">40</span>
-				<span class="button" id="set50" onclick="setValue(50)">50</span>
+				<span class="reset button selected">20</span>
+				<span class="reset button">30</span>
+				<span class="reset button">40</span>
+				<span class="reset button">50</span>
 			</span>
 		</div>
 		<div class="container lifecontrols" id="bottomlife">
 			<span class="vertical">
-				<span class="button" onclick="changeLife(-1, 'life2')">-</span>
-				<span class="value" id="life2">20</span>
-				<span class="button" onclick="changeLife(1, 'life2')">+</span>
+				<span class="change button">-</span>
+				<span class="value">20</span>
+				<span class="change button">+</span>
 			</span>
 		</div>
+		<script type="text/javascript">
+			var changeLife = function(e) {
+				var element = e.target.parentNode.getElementsByClassName("value")[0];
+				var value = parseInt(element.textContent);
+				var amount = parseInt(e.target.textContent + "1");
+				element.textContent = value + amount;
+			}
+			var resetLife = function(e) {
+				var value = e.target.textContent;
+				var elements = document.getElementsByClassName("value");
+				for (var i = 0; i < elements.length; i++) {
+					var element = elements[i];
+					element.textContent = value;
+				}
+				document.getElementsByClassName("selected")[0].className = "reset button";
+				e.target.className = "reset button selected";
+			}
+			var resetButtons = document.getElementsByClassName("reset");
+			for (var i = 0; i < resetButtons.length; i++) {
+				resetButtons[i].onclick = resetLife;
+			}
+			var changeButtons = document.getElementsByClassName("change");
+			for (var i = 0; i < changeButtons.length; i++) {
+				changeButtons[i].onclick = changeLife;
+			}
+		</script>
     </body>
 </html>
